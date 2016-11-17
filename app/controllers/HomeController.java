@@ -1,7 +1,18 @@
 package controllers;
+
+import play.api.Environment;
 import play.mvc.*;
+import play.data.*;
+import play.db.ebean.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.inject.Inject;
+
 import views.html.*;
 
+//import models
+import models.*;
 public class HomeController extends Controller {
 
     public Result index(String name) {
@@ -13,7 +24,12 @@ public class HomeController extends Controller {
     }
 
     public Result products() {
-        return ok(products.render());
+
+	//get the list of products
+	List<Product> productsList = Product.findAll();
+
+	// Render the list products view passing parametors
+        return ok(products.render(productsList));
     }
 
 }
